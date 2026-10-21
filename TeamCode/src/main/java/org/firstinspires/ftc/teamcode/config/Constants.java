@@ -11,8 +11,11 @@ public class Constants {
     }
 
     public static class IntakeConstants {
-        public static final String pivotMotorKey = "";
-        public static final String rollerMotorKey = "";
+        public static final String rollerMotorLeftKey = "";
+        public static final String rollerMotorRightKey = "";
+
+        public static final double ROLLER_GEAR_RATIO = 5;
+        public static final double OUTTAKE_GEAR_RATIO = 3;
     }
 
     public static class ShooterConstants {

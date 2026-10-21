@@ -3,12 +3,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.subsystems.ControlHubSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.OmniDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
-public class OmniOpMode extends OpMode {
+public class MainOpMode extends OpMode {
 
     final ElapsedTime runtime = new ElapsedTime();
-    OmniDriveSubsystem drive = null;
+    OmniDriveSubsystem drive;
+    IntakeSubsystem intake;
+    ShooterSubsystem shooter;
+    ControlHubSubsystem controlHub;
 
     /**
      * This method will be called repeatedly during the period between when
@@ -33,7 +39,11 @@ public class OmniOpMode extends OpMode {
      */
     @Override
     public void init() {
+
+        controlHub = new ControlHubSubsystem();
         drive = new OmniDriveSubsystem();
+        intake = new IntakeSubsystem(controlHub);
+        shooter = new ShooterSubsystem(controlHub);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -46,6 +56,12 @@ public class OmniOpMode extends OpMode {
     @Override
     public void loop() {
         drive.update();
+        intake.update();
+        shooter.update();
+
+        if (gamepad1.b) {
+            
+        }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }

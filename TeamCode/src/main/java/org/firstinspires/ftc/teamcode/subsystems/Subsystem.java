@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-public interface Subsystem {
-    void update();
+public abstract class Subsystem {
+
+    public void update() {};
 }

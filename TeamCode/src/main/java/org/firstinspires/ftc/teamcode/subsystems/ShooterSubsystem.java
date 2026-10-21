@@ -6,15 +6,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.config.Constants;
 
-public class ShooterSubsystem implements Subsystem {
+public class ShooterSubsystem extends Subsystem {
     DcMotor rotatorMotor;
     DcMotor frontFlyWheel;
     DcMotor backFlyWheel;
 
-    public ShooterSubsystem() {
+    ControlHubSubsystem controlHub;
+
+    public ShooterSubsystem(ControlHubSubsystem controlHub) {
         rotatorMotor = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.rotatorMotorKey);
         frontFlyWheel = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.frontFlywheelKey);
         backFlyWheel = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.backFlywheelKey);
+        this.controlHub = controlHub;
     }
 
     @Override
