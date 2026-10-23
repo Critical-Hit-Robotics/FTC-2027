@@ -6,7 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.subsystems.ControlHubSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.OmniDriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.VisionSubsystem;
 
 public class MainOpMode extends OpMode {
 
@@ -15,6 +16,7 @@ public class MainOpMode extends OpMode {
     IntakeSubsystem intake;
     ShooterSubsystem shooter;
     ControlHubSubsystem controlHub;
+    VisionSubsystem vision;
 
     /**
      * This method will be called repeatedly during the period between when
@@ -40,10 +42,12 @@ public class MainOpMode extends OpMode {
     @Override
     public void init() {
 
+
         controlHub = new ControlHubSubsystem();
         drive = new OmniDriveSubsystem();
         intake = new IntakeSubsystem(controlHub);
         shooter = new ShooterSubsystem(controlHub);
+        vision = new VisionSubsystem();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -59,8 +63,27 @@ public class MainOpMode extends OpMode {
         intake.update();
         shooter.update();
 
+        // Intake binds:
+        // B: Start intaking
+        // A: Stop intaking
+
         if (gamepad1.b) {
-            
+            intake.setState(IntakeSubsystem.IntakeState.INTAKE);
+        }
+
+        if (gamepad1.a) {
+            intake.setState(IntakeSubsystem.IntakeState.STOP_INTAKE);
+        }
+
+//        if (gamepad1.b && gamepad1.a) {
+//            intake.setState(IntakeSubsystem.IntakeState.IDLE);
+//        }
+
+        // Shooter binds:
+        // X: Shoot
+
+        if (gamepad1.y) {
+
         }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());

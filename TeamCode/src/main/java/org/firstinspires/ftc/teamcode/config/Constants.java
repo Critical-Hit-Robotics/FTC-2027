@@ -10,6 +10,10 @@ public class Constants {
         public static final String backRightDriveKey = "";
     }
 
+    public static class VisionConstants {
+        public static final String webcamKey = "";
+    }
+
     public static class IntakeConstants {
         public static final String rollerMotorLeftKey = "";
         public static final String rollerMotorRightKey = "";
@@ -22,8 +26,7 @@ public class Constants {
         public static final String frontFlywheelKey = "";
         public static final String backFlywheelKey = "";
 
-        public static final String hoodMotorKey = "";
-        public static final String rotatorMotorKey = "";
+        public static final String azimuthMotorKey = "";
     }
 
 
