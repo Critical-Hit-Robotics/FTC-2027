@@ -1,35 +1,33 @@
 package org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.seattlesolvers.solverslib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.config.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.ControlHubSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.Subsystem;
+import org.firstinspires.ftc.teamcode.subsystems.io.FlyWheelIOReal;
+import org.firstinspires.ftc.teamcode.subsystems.io.FlywheelIO;
+import org.firstinspires.ftc.teamcode.subsystems.io.FlywheelInputsAutoLogged;
 
-public class ShooterSubsystem extends Subsystem {
-    DcMotor rotatorMotor;
-    DcMotor frontFlyWheel;
-    DcMotor backFlyWheel;
+import java.util.function.DoubleSupplier;
 
-    ControlHubSubsystem controlHub;
+public class ShooterSubsystem implements Subsystem {
 
-    public enum ShooterState {
-        SHOOTING, PREPARATION, OFF
-    }
+    FlywheelIO frontFlyWheel;
+    FlywheelIO backFlyWheel;
 
-    ShooterState state;
+    FlywheelInputsAutoLogged backFlyWheelInputs;
+    FlywheelInputsAutoLogged frontFlyWheelInputs;
 
-    public ShooterSubsystem(ControlHubSubsystem controlHub) {
-        rotatorMotor = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.rotatorMotorKey);
-        frontFlyWheel = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.frontFlywheelKey);
-        backFlyWheel = hardwareMap.get(DcMotor.class, Constants.ShooterConstants.backFlywheelKey);
-        this.controlHub = controlHub;
+    public ShooterSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
+        frontFlyWheel = new FlyWheelIOReal(hardwareMap, Constants.ShooterConstants.frontFlywheelKey, voltageSupplier);
+        backFlyWheel = new FlyWheelIOReal(hardwareMap, Constants.ShooterConstants.backFlywheelKey, voltageSupplier);
+        frontFlyWheelInputs = new FlywheelInputsAutoLogged();
+        backFlyWheelInputs = new FlywheelInputsAutoLogged();
     }
 
     @Override
-    public void update() {
-
+    public void periodic() {
+        backFlyWheel.updateInputs(backFlyWheelInputs);
+        frontFlyWheel.updateInputs(frontFlyWheelInputs);
     }
 }

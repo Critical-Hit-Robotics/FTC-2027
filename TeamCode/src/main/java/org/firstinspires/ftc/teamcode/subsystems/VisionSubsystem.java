@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import android.util.Size;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.seattlesolvers.solverslib.command.Subsystem;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class VisionSubsystem extends Subsystem {
+public class VisionSubsystem implements Subsystem {
     public enum CurrentAlliance {
         RED, BLUE
     }
@@ -36,7 +38,7 @@ public class VisionSubsystem extends Subsystem {
 
     AprilTagDetection[] detections = {};
 
-    public VisionSubsystem() {
+    public VisionSubsystem(HardwareMap hardwareMap) {
         aprilTagProcessor = new AprilTagProcessor.Builder().build();
 
         VisionPortal.Builder builder = new VisionPortal.Builder();

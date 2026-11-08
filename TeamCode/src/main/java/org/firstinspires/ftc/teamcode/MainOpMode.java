@@ -1,91 +1,49 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.seattlesolvers.solverslib.command.FunctionalCommand;
+import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.teamcode.subsystems.ControlHubSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.OmniDriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.VisionSubsystem;
+import org.firstinspires.ftc.teamcode.commands.StartIntake;
+import org.firstinspires.ftc.teamcode.commands.StopIntake;
+
+import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class MainOpMode extends OpMode {
 
-    final ElapsedTime runtime = new ElapsedTime();
-    OmniDriveSubsystem drive;
-    IntakeSubsystem intake;
-    ShooterSubsystem shooter;
-    ControlHubSubsystem controlHub;
-    VisionSubsystem vision;
+    protected Robot robot;
 
-    /**
-     * This method will be called repeatedly during the period between when
-     * the init button is pressed and when the play button is pressed (or the
-     * OpMode is stopped).
-     */
-    @Override
-    public void init_loop() {
-        // TODO: Poll for our current team?
-    };
 
-    /**
-     * This method will be called once, when the play button is pressed.
-     */
-    @Override
-    public void start() {
-        runtime.reset();
-    };
-
-    /**
-     * This method will be called once, when the INIT button is pressed.
-     */
     @Override
     public void init() {
+        KoalaLog.setup(hardwareMap);
 
-
-        controlHub = new ControlHubSubsystem();
-        drive = new OmniDriveSubsystem();
-        intake = new IntakeSubsystem(controlHub);
-        shooter = new ShooterSubsystem(controlHub);
-        vision = new VisionSubsystem();
+        robot = new Robot();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
+    
+    @Override
+    public void start() {
+        robot.runtime.reset();
+        KoalaLog.start();
+    }
 
-    /**
-     * This method will be called repeatedly during the period between when
-     * the play button is pressed and when the OpMode is stopped.
-     */
+
     @Override
     public void loop() {
-        drive.update();
-        intake.update();
-        shooter.update();
+        robot.driverController.getGamepadButton(GamepadKeys.Button.B).whenPressed(new StartIntake(robot.intake));
+        robot.driverController.getGamepadButton(GamepadKeys.Button.A).whenPressed(new StopIntake(robot.intake));
 
-        // Intake binds:
-        // B: Start intaking
-        // A: Stop intaking
-
-        if (gamepad1.b) {
-            intake.setState(IntakeSubsystem.IntakeState.INTAKE);
-        }
-
-        if (gamepad1.a) {
-            intake.setState(IntakeSubsystem.IntakeState.STOP_INTAKE);
-        }
-
-//        if (gamepad1.b && gamepad1.a) {
-//            intake.setState(IntakeSubsystem.IntakeState.IDLE);
-//        }
-
-        // Shooter binds:
-        // X: Shoot
-
-        if (gamepad1.y) {
-
-        }
-
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
     }
+
+    @Override
+    public void stop() {
+        KoalaLog.stop();
+    }
+
+
 }

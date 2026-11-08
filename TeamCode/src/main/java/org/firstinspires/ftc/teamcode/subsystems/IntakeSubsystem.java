@@ -3,26 +3,27 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.seattlesolvers.solverslib.command.Subsystem;
 
-import org.firstinspires.ftc.teamcode.config.Constants;
+import org.firstinspires.ftc.teamcode.config.Constants.IntakeConstants;
+import org.firstinspires.ftc.teamcode.util.MotorMath;
 
-public class IntakeSubsystem extends Subsystem {
-    public enum IntakeState {
-        INTAKE, STOP_INTAKE, IDLE
-    }
+import java.util.function.DoubleSupplier;
 
-    ControlHubSubsystem controlHub;
-    IntakeState state = IntakeState.IDLE;
+
+public class IntakeSubsystem implements Subsystem {
 
     DcMotor rollerMotorLeft;
     DcMotor rollerMotorRight;
+    final DoubleSupplier voltageSupplier;
 
 
-    public IntakeSubsystem(ControlHubSubsystem controlHub) {
-        this.controlHub = controlHub;
+    public IntakeSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
+        this.voltageSupplier = voltageSupplier;
 
-        rollerMotorLeft = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.rollerMotorLeftKey);
-        rollerMotorRight = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.rollerMotorRightKey);
+        rollerMotorLeft = hardwareMap.get(DcMotor.class, IntakeConstants.rollerMotorLeftKey);
+        rollerMotorRight = hardwareMap.get(DcMotor.class, IntakeConstants.rollerMotorRightKey);
 
         // Change to use an encoder if it doesn't affect performance
         rollerMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -37,25 +38,16 @@ public class IntakeSubsystem extends Subsystem {
         rollerMotorLeft.setPower(power);
     }
 
-    void setVolts(double volts) {
-        double power = controlHub.voltageToPower(volts);
+    void setVoltage(double targetVoltage) {
+        double power = MotorMath.voltsToPower(targetVoltage, voltageSupplier.getAsDouble());
         setPower(power);
     }
 
-    public void update() {
-        switch (this.state) {
-            case IDLE:
-                break;
-            case INTAKE:
-                setVolts(3);
-                break;
-            case STOP_INTAKE:
-                setPower(0);
-                break;
-        }
+    public void startIntake() {
+        setVoltage(6);
     }
 
-    public void setState(IntakeState state) {
-        this.state = state;
-    };
+    public void stopIntake() {
+        setVoltage(0);
+    }
 }
