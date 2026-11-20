@@ -4,26 +4,27 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.config.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.io.FlyWheelIOReal;
-import org.firstinspires.ftc.teamcode.subsystems.io.FlywheelIO;
-import org.firstinspires.ftc.teamcode.subsystems.io.FlywheelInputsAutoLogged;
+import org.firstinspires.ftc.teamcode.subsystems.io.MotorIO;
+import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOGoBuilda;
+import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOInputsAutoLogged;
 
 import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem implements Subsystem {
 
-    FlywheelIO frontFlyWheel;
-    FlywheelIO backFlyWheel;
+    MotorIO frontFlyWheel;
+    MotorIO backFlyWheel;
 
-    FlywheelInputsAutoLogged backFlyWheelInputs;
-    FlywheelInputsAutoLogged frontFlyWheelInputs;
+    MotorIOInputsAutoLogged backFlyWheelInputs;
+    MotorIOInputsAutoLogged frontFlyWheelInputs;
 
     public ShooterSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
-        frontFlyWheel = new FlyWheelIOReal(hardwareMap, Constants.ShooterConstants.frontFlywheelKey, voltageSupplier);
-        backFlyWheel = new FlyWheelIOReal(hardwareMap, Constants.ShooterConstants.backFlywheelKey, voltageSupplier);
-        frontFlyWheelInputs = new FlywheelInputsAutoLogged();
-        backFlyWheelInputs = new FlywheelInputsAutoLogged();
+        frontFlyWheel = new MotorIOGoBuilda(hardwareMap, Constants.ShooterConstants.frontFlywheelKey, voltageSupplier);
+        backFlyWheel = new MotorIOGoBuilda(hardwareMap, Constants.ShooterConstants.backFlywheelKey, voltageSupplier);
+        frontFlyWheelInputs = new MotorIOInputsAutoLogged();
+        backFlyWheelInputs = new MotorIOInputsAutoLogged();
     }
+
 
     @Override
     public void periodic() {

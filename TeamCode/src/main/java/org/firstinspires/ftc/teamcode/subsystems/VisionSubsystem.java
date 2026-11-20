@@ -13,6 +13,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
+import org.firstinspires.ftc.teamcode.config.Constants.VisionConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,30 +24,27 @@ public class VisionSubsystem implements Subsystem {
         RED, BLUE
     }
 
-    CurrentAlliance alliance;
-    AprilTagProcessor aprilTagProcessor;
+    private final AprilTagProcessor aprilTagProcessor;
 
-
-    private VisionPortal visionPortal;
-    private final boolean USE_WEBCAM = false;
-
-    private final int[][] RED_SCORING_TAGS = {{30, 31}, {32, 33}};
-    private final int[][] BLUE_SCORING_TAGS = {{42, 43}, {44, 45}};
-
-    private final int[][] BLUE_AUDIENCE_TAGS = {};
-    private final int[][] RED_AUDIENCE_TAGS = {};
-
-    AprilTagDetection[] detections = {};
+    private final VisionPortal visionPortal;
+    private CurrentAlliance alliance;
+    private AprilTagDetection[] detections = {};
 
     public VisionSubsystem(HardwareMap hardwareMap) {
         aprilTagProcessor = new AprilTagProcessor.Builder().build();
 
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
-        if (USE_WEBCAM) {
-            builder.setCamera(hardwareMap.get(WebcamName.class, Constants.VisionConstants.webcamKey));
-        } else {
-            builder.setCamera(BuiltinCameraDirection.BACK);
+        switch (VisionConstants.visionType) {
+            case NATIVE:
+
+                break;
+            case WEBCAM:
+
+                break;
+            case LIMELIGHT:
+
+                break;
         }
 
         builder.setCameraResolution(new Size(640, 480));
@@ -99,10 +97,10 @@ public class VisionSubsystem implements Subsystem {
 
         switch (alliance) {
             case BLUE:
-                targetScoringGroups = BLUE_SCORING_TAGS;
+                targetScoringGroups = VisionConstants.BLUE_SCORING_TAGS;
                 break;
             case RED:
-                targetScoringGroups = RED_SCORING_TAGS;
+                targetScoringGroups = VisionConstants.RED_SCORING_TAGS;
                 break;
 
             default:

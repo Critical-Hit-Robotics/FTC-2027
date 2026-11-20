@@ -24,8 +24,7 @@ public class IntakeSubsystem implements Subsystem {
 
         rollerMotorLeft = hardwareMap.get(DcMotor.class, IntakeConstants.rollerMotorLeftKey);
         rollerMotorRight = hardwareMap.get(DcMotor.class, IntakeConstants.rollerMotorRightKey);
-
-        // Change to use an encoder if it doesn't affect performance
+        
         rollerMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rollerMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

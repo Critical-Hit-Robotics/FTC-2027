@@ -1,14 +1,8 @@
 package org.firstinspires.ftc.teamcode.config;
 
-import com.pedropathing.follower.Follower;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class Constants {
     public static class ControlHubConstants {
@@ -22,47 +16,23 @@ public class Constants {
         public static final String backRightDriveKey = "";
 
         public static final String IMUKey = "";
-
-//        public static FollowerConstants followerConstants = new FollowerConstants()
-//                .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.2, 0.0729150938, 0.00192608311))
-//                .headingPIDFCoefficients(new PIDFCoefficients(2, 0, 0.1, 0.025))
-//                .centripetalScaling(0);
-//
-//        public static MecanumConstants driveConstants = new MecanumConstants()
-//                .maxPower(1)
-//                .rightFrontMotorName("frontRight")
-//                .rightRearMotorName("backRight")
-//                .leftRearMotorName("backLeft")
-//                .leftFrontMotorName("frontLeft")
-//                .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-//                .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-//                .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-//                .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-//                .xVelocity(74.0662)
-//                .yVelocity(55.7839);
-//
-//        public static PinpointConstants localizerConstants = new PinpointConstants()
-//                .forwardPodY(4.091074485478439)
-//                .strafePodX(-6.032020989365465)
-//                .distanceUnit(DistanceUnit.INCH)
-//                .hardwareMapName("pinpoint")
-//                .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-//                .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-//                .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-//
-//        public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
-//
-//        public static Follower createFollower(HardwareMap hardwareMap) {
-//            return new FollowerBuilder(followerConstants, hardwareMap)
-//                    .mecanumDrivetrain(driveConstants)
-//                    .pinpointLocalizer(localizerConstants)
-//                    .pathConstraints(pathConstraints)
-//                    .build();
-//        }
     }
 
+
     public static class VisionConstants {
+        public static enum VisionType {
+            WEBCAM, LIMELIGHT, NATIVE
+        }
+
         public static final String webcamKey = "";
+
+        public static final VisionType visionType = VisionType.WEBCAM;
+
+        public static final int[][] RED_SCORING_TAGS = {{30, 31}, {32, 33}};
+        public static final int[][] BLUE_SCORING_TAGS = {{42, 43}, {44, 45}};
+
+        public static final int[][] BLUE_AUDIENCE_TAGS = {};
+        public static final int[][] RED_AUDIENCE_TAGS = {};
     }
 
     public static class IntakeConstants {
@@ -83,6 +53,16 @@ public class Constants {
             public static final PIDCoefficients azimuthPIDCoefficients = new PIDCoefficients(0, 0, 0);
             public static final String leftServoKey = "";
             public static final String rightServoKey = "";
+            public static final String azimuthEncoder = "";
+
+            public static final double servoToAzimuthGearRatio = 30.0 / 2.0;
+
+            public static final int kEncoderTicksToDegrees = 4000;
+            public static final int kServoTicksToDegrees = 4000;
+
+            public static boolean isValidAngle(double inputAngle) {
+                return AngleUnit.DEGREES.normalize(inputAngle) > 30;
+            }
         }
 
 
