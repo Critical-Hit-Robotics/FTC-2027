@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Subsystem;
 import com.seattlesolvers.solverslib.controller.PIDController;
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 import org.firstinspires.ftc.teamcode.config.Constants.ShooterConstants.TurretConstants;
-import org.firstinspires.ftc.teamcode.subsystems.VisionSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIO;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOInputsAutoLogged;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOServo;

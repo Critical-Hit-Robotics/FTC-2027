@@ -25,14 +25,9 @@ public class Constants {
         }
 
         public static final String webcamKey = "";
+        public static final String limelightKey = "";
 
         public static final VisionType visionType = VisionType.WEBCAM;
-
-        public static final int[][] RED_SCORING_TAGS = {{30, 31}, {32, 33}};
-        public static final int[][] BLUE_SCORING_TAGS = {{42, 43}, {44, 45}};
-
-        public static final int[][] BLUE_AUDIENCE_TAGS = {};
-        public static final int[][] RED_AUDIENCE_TAGS = {};
     }
 
     public static class IntakeConstants {

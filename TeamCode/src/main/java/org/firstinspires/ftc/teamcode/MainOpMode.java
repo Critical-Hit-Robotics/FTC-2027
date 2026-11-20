@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.pedropathing.ivy.Scheduler;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.command.FunctionalCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
@@ -24,9 +25,10 @@ public class MainOpMode extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
-    
+
     @Override
     public void start() {
+        Scheduler.reset();
         robot.runtime.reset();
         KoalaLog.start();
     }
@@ -38,6 +40,8 @@ public class MainOpMode extends OpMode {
         robot.driverController.getGamepadButton(GamepadKeys.Button.A).whenPressed(new StopIntake(robot.intake));
 
         telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
+
+        Scheduler.execute();
     }
 
     @Override

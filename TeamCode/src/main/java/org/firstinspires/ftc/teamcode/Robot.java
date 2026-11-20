@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.ControlHub.ControlHubSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.VisionSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 
 public class Robot {
     public final ElapsedTime runtime = new ElapsedTime();
