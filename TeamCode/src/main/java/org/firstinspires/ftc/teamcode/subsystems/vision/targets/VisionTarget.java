@@ -13,12 +13,6 @@ public abstract class VisionTarget {
         this.targetPose = targetPose;
         this.fractionVisible = fractionVisible;
     }
-
-
-    public double getDistance() {
-        Position position = targetPose.getPosition();
-        return Math.hypot(position.x, position.y);
-    }
 }
 
 

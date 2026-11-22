@@ -63,6 +63,7 @@ public class VisionSubsystem implements Subsystem {
 
         for (ClusterTarget target : targets) {
             double currentDist = target.getDistance();
+
         }
 
         return closest;
