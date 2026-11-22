@@ -78,7 +78,16 @@ public class HardwareVision implements VisionInterface {
             if (detection instanceof AprilTagClusterDetection) {
                 AprilTagClusterDetection clusterDetection = (AprilTagClusterDetection) detection;
 
-                target = new ClusterTarget(timestampNanoseconds, newPose, clusterDetection.metadata.name, clusterDetection.percentClusterFound / 100.0);
+                String clusterName = clusterDetection.metadata.name;
+                ClusterTarget.ClusterTargetAlliance alliance;
+
+                if (clusterName.toLowerCase().contains("red")) {
+                    alliance = ClusterTarget.ClusterTargetAlliance.Red;
+                } else {
+                    alliance = ClusterTarget.ClusterTargetAlliance.Blue;
+                }
+
+                target = new ClusterTarget(timestampNanoseconds, newPose, clusterName, alliance, null, ((AprilTagClusterDetection) detection).percentClusterFound);
             }
 
             if (target == null) {

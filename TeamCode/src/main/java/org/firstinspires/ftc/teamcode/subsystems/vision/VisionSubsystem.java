@@ -9,12 +9,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.HardwareVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.LimelightVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.VisionInterface;
+import org.firstinspires.ftc.teamcode.subsystems.vision.targets.ClusterTarget;
+import org.firstinspires.ftc.teamcode.subsystems.vision.targets.VisionTarget;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.teamcode.config.Constants.VisionConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VisionSubsystem implements Subsystem {
     public enum CurrentAlliance {
@@ -45,5 +48,23 @@ public class VisionSubsystem implements Subsystem {
     @Override
     public void periodic() {
         vision.periodic();
+    }
+
+    public ClusterTarget getClosestHive() {
+        // Filters targets by clusterTargets
+        List<ClusterTarget> targets = vision.getTargets().stream().filter(x -> x instanceof ClusterTarget).map(x -> (ClusterTarget) x).collect(Collectors.toList());
+
+        if (targets.isEmpty()) {
+            return null;
+        }
+
+        ClusterTarget closest = targets.stream().findFirst().get();
+        double distance = closest.getDistance();
+
+        for (ClusterTarget target : targets) {
+            double currentDist = target.getDistance();
+        }
+
+        return closest;
     }
 }

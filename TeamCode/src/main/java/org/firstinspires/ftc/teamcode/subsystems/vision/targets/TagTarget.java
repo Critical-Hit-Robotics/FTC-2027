@@ -5,8 +5,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 public final class TagTarget extends VisionTarget {
     public final int id;
 
+    public TagTarget(long timestampNanoseconds, Pose3D targetPose, int id, double fractionVisible) {
+        super(timestampNanoseconds, targetPose, fractionVisible);
+        this.id = id;
+    }
+
     public TagTarget(long timestampNanoseconds, Pose3D targetPose, int id) {
-        super(timestampNanoseconds, targetPose);
+        super(timestampNanoseconds, targetPose, 1);
         this.id = id;
     }
 }
