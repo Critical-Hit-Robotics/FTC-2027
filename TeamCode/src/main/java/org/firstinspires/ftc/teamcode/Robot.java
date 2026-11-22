@@ -28,7 +28,7 @@ public class Robot {
         drive = new Drivetrain(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap, controlHub.getVoltageSupplier());
         shooter = new ShooterSubsystem(hardwareMap, controlHub.getVoltageSupplier());
-        vision = new VisionSubsystem(hardwareMap);
+        vision = new VisionSubsystem(hardwareMap, drive);
         driverController = new GamepadEx(gamepad1);
     }
 }

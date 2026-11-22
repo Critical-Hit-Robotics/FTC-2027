@@ -11,6 +11,7 @@ import com.seattlesolvers.solverslib.command.Subsystem;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.config.Constants;
 
 public class Drivetrain implements Subsystem {
@@ -19,10 +20,14 @@ public class Drivetrain implements Subsystem {
     private final DcMotorEx backLeftDrive;
     private final DcMotorEx backRightDrive;
 
-    IMU imu;
+    private final IMU imu;
+
+    // TODO: Implement
+    public Pose3D getRobotPose() {
+        throw new UnsupportedOperationException("getRobotPose is not implemented");
+    }
 
     public Drivetrain(HardwareMap hardwareMap) {
-
         frontLeftDrive = hardwareMap.get(DcMotorEx.class, Constants.DriveConstants.frontLeftDriveKey);
         frontRightDrive = hardwareMap.get(DcMotorEx.class, Constants.DriveConstants.frontRightDriveKey);
         backLeftDrive = hardwareMap.get(DcMotorEx.class, Constants.DriveConstants.backLeftDriveKey);
