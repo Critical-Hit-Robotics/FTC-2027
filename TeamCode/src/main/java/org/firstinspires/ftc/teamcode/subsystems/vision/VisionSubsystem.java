@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDir
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.HardwareVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.LimelightVision;
@@ -30,11 +31,11 @@ public class VisionSubsystem implements Subsystem {
 
 
     private final VisionInterface vision;
-    private final Drivetrain drivetrain;
+    private final Robot robot;
 
 
-    public VisionSubsystem(HardwareMap hardwareMap, Drivetrain drivetrain) {
-        this.drivetrain = drivetrain;
+    public VisionSubsystem(HardwareMap hardwareMap, Robot robot) {
+        this.robot = robot;
 
         switch (VisionConstants.visionType) {
             case NATIVE:
@@ -56,14 +57,23 @@ public class VisionSubsystem implements Subsystem {
     }
 
     public ClusterTarget getClosestHive() {
-        // Filters targets by clusterTargets
-        List<ClusterTarget> targets = vision.getTargets().stream().filter(x -> x instanceof ClusterTarget).map(x -> (ClusterTarget) x).collect(Collectors.toList());
+        List<ClusterTarget> targets = vision.getTargets()
+                .stream()
+                .filter(x -> {
+                    boolean isCluster = x instanceof ClusterTarget;
+                    if (isCluster) {
+                        ClusterTarget target = (ClusterTarget) x;
+                        return target.tagAlliance == robot.alliance;
+                    }
+
+                    return false;
+                }).map(x -> (ClusterTarget) x).collect(Collectors.toList());
 
         if (targets.isEmpty()) {
             return null;
         }
 
-        Position currentPosition = drivetrain.getRobotPose().getPosition();
+        Position currentPosition = robot.drive.getRobotPose().getPosition();
 
         ClusterTarget closest = targets.stream().findFirst().get();
         double closestDistance = PoseMath.distance2d(closest.targetPose.getPosition(), currentPosition, DistanceUnit.CM);

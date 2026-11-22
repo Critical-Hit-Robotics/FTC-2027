@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.config.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.ClusterTarget;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.TagTarget;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.VisionTarget;
@@ -147,12 +148,12 @@ public class LimelightVision implements VisionInterface {
             }
 
             String clusterName = entry.getKey();
-            ClusterTarget.ClusterTargetAlliance alliance;
+            VisionSubsystem.CurrentAlliance alliance;
 
             if (clusterName.toLowerCase().contains("red")) {
-                alliance = ClusterTarget.ClusterTargetAlliance.Red;
+                alliance = VisionSubsystem.CurrentAlliance.RED;
             } else {
-                alliance = ClusterTarget.ClusterTargetAlliance.Blue;
+                alliance = VisionSubsystem.CurrentAlliance.BLUE;
             }
 
             // must be true, we just checked if it's empty

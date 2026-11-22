@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.ClusterTarget;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.TagTarget;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.VisionTarget;
@@ -79,12 +80,12 @@ public class HardwareVision implements VisionInterface {
                 AprilTagClusterDetection clusterDetection = (AprilTagClusterDetection) detection;
 
                 String clusterName = clusterDetection.metadata.name;
-                ClusterTarget.ClusterTargetAlliance alliance;
+                VisionSubsystem.CurrentAlliance alliance;
 
                 if (clusterName.toLowerCase().contains("red")) {
-                    alliance = ClusterTarget.ClusterTargetAlliance.Red;
+                    alliance = VisionSubsystem.CurrentAlliance.RED;
                 } else {
-                    alliance = ClusterTarget.ClusterTargetAlliance.Blue;
+                    alliance = VisionSubsystem.CurrentAlliance.BLUE;
                 }
 
                 target = new ClusterTarget(timestampNanoseconds, newPose, clusterName, alliance, null, ((AprilTagClusterDetection) detection).percentClusterFound);

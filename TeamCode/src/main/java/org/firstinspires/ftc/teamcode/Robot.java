@@ -21,6 +21,7 @@ public class Robot {
     public final VisionSubsystem vision;
 
     public final GamepadEx driverController;
+    public final VisionSubsystem.CurrentAlliance alliance = VisionSubsystem.CurrentAlliance.BLUE;
 
 
     public Robot() {
@@ -28,7 +29,7 @@ public class Robot {
         drive = new Drivetrain(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap, controlHub.getVoltageSupplier());
         shooter = new ShooterSubsystem(hardwareMap, controlHub.getVoltageSupplier());
-        vision = new VisionSubsystem(hardwareMap, drive);
+        vision = new VisionSubsystem(hardwareMap, this);
         driverController = new GamepadEx(gamepad1);
     }
 }
