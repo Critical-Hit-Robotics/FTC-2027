@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import java.util.function.DoubleSupplier;
 
 public class MotorIOServo implements MotorIO {
@@ -18,26 +20,14 @@ public class MotorIOServo implements MotorIO {
         this.voltage = voltage;
     }
 
+
     @Override
     public void updateInputs(MotorIOInputsAutoLogged inputs) {
-        inputs.targetPosition = targetPosition;
-        inputs.voltage = targetVoltage;
-        
-    }
-
-    @Override
-    public void setTargetVoltage(double voltage) {
 
     }
 
     @Override
-    public void setTargetPosition(double voltage) {
+    public void setTargetAngle(AngleUnit angle) {
 
     }
-
-    @Override
-    public void setPower(double power) {
-
-    }
-
 }

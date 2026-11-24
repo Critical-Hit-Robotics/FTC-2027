@@ -3,14 +3,19 @@ package org.firstinspires.ftc.teamcode.subsystems.io;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import java.util.function.DoubleSupplier;
 
 public class MotorIOGoBuilda implements MotorIO {
-    DcMotorEx m_motor;
-    DoubleSupplier m_voltage;
+    private final DcMotorEx motor;
+    private final DoubleSupplier m_voltage;
+    private double targetPosition = 0;
+    private double targetRotationsPerMinute = 0;
 
     public MotorIOGoBuilda(HardwareMap hardwareMap, String identifier, DoubleSupplier voltage) {
-        m_motor = hardwareMap.get(DcMotorEx.class, identifier);
+        motor = hardwareMap.get(DcMotorEx.class, identifier);
+        m_voltage = voltage;
     }
 
     @Override
@@ -19,18 +24,12 @@ public class MotorIOGoBuilda implements MotorIO {
     }
 
     @Override
-    public void setTargetVoltage(double voltage) {
+    public void setTargetAngle(AngleUnit angle) {
 
     }
 
     @Override
-    public void setTargetPosition(double voltage) {
-
+    public void setTargetVelocity(double rotationsPerMinute) {
+        targetRotationsPerMinute = rotationsPerMinute;
     }
-
-    @Override
-    public void setPower(double power) {
-
-    }
-
 }

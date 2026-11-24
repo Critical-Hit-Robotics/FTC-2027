@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.io;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import Ori.Coval.Logging.AutoLog;
 
 public interface MotorIO {
@@ -7,7 +9,6 @@ public interface MotorIO {
     public class MotorIOInputs {
         public double position;
         public double power;
-        public double voltage;
 
         public double targetVoltage;
         public double targetPosition;
@@ -16,9 +17,9 @@ public interface MotorIO {
 
     public void updateInputs(MotorIOInputsAutoLogged inputs);
 
-    public void setTargetVoltage(double voltage);
+    public void setTargetAngle(AngleUnit angle);
 
-    public void setTargetPosition(double voltage);
-
-    public void setPower(double power);
+    public default void setTargetVelocity(double rotationsPerMinute) {
+        throw new UnsupportedOperationException("Cannot set velocity on this class.");
+    }
 }
