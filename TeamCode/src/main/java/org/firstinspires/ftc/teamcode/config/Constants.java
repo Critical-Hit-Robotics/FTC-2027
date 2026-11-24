@@ -9,6 +9,10 @@ public class Constants {
         public static final String voltageSensorKey = "";
     }
 
+    public static class GoBuildaMotorConstants {
+        public static final double motorTicksToDegrees = 30;
+    }
+
     public static class DriveConstants {
         public static final String frontLeftDriveKey = "";
         public static final String frontRightDriveKey = "";

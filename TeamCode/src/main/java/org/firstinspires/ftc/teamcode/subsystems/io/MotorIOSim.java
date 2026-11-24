@@ -14,11 +14,11 @@ public class MotorIOSim implements MotorIO {
 
     @Override
     public void updateInputs(MotorIOInputsAutoLogged inputs) {
-        
+
     }
 
     @Override
-    public void setTargetAngle(AngleUnit angle) {
+    public void setTargetAngle(double degrees) {
 
     }
 }

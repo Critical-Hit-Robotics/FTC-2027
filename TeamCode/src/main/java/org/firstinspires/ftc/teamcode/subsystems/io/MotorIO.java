@@ -8,16 +8,15 @@ public interface MotorIO {
     @AutoLog
     public class MotorIOInputs {
         public double position;
-        public double power;
-
-        public double targetVoltage;
-        public double targetPosition;
         public double rpm;
+
+        public double targetVelocity;
+        public double targetDegrees;
     }
 
     public void updateInputs(MotorIOInputsAutoLogged inputs);
 
-    public void setTargetAngle(AngleUnit angle);
+    public void setTargetAngle(double degrees);
 
     public default void setTargetVelocity(double rotationsPerMinute) {
         throw new UnsupportedOperationException("Cannot set velocity on this class.");

@@ -27,7 +27,7 @@ public class MotorIOServo implements MotorIO {
     }
 
     @Override
-    public void setTargetAngle(AngleUnit angle) {
+    public void setTargetAngle(double degrees) {
 
     }
 }
