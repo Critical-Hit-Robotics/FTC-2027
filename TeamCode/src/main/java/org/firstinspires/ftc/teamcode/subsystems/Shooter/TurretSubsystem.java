@@ -7,6 +7,7 @@ import com.seattlesolvers.solverslib.controller.PIDController;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.config.Constants.ShooterConstants.TurretConstants;
+import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOGoBuilda;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIO;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOInputsAutoLogged;
@@ -24,7 +25,8 @@ public class TurretSubsystem implements Subsystem {
   private TurretState state;
   private final VisionSubsystem visionSubsystem;
 
-  private final DcMotorEx turretAzimuth;
+  private final MotorIOGoBuilda turretAzimuth;
+  private final MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
   private double targetDegrees = 0;
 
   PIDController controller =
@@ -35,35 +37,40 @@ public class TurretSubsystem implements Subsystem {
 
   public TurretSubsystem(
       HardwareMap hardwareMap, DoubleSupplier voltageSupplier, VisionSubsystem vision) {
-    turretAzimuth = hardwareMap.get(DcMotorEx.class, TurretConstants.azimuthMotorKey);
+    turretAzimuth =
+        new MotorIOGoBuilda(
+            hardwareMap,
+            TurretConstants.azimuthMotorKey,
+            voltageSupplier,
+            TurretConstants.kAzimuthTicksToDegrees);
     this.state = TurretState.TARGETING;
     this.visionSubsystem = vision;
   }
-
-  public void setVoltage(double volts) {}
 
   public void setAngle(double degrees) {
     if (!TurretConstants.isValidAngle(degrees)) {
       return;
     }
 
-    this.targetDegrees = degrees;
+    double desiredAngle =
+        AngleUnit.normalizeDegrees(targetDegrees) * TurretConstants.motorToAzimuthGearRatio;
+
+    this.targetDegrees = desiredAngle;
+    controller.setSetPoint(desiredAngle);
   }
 
   @Override
   public void periodic() {
-    double currentAngle =
-        turretAzimuth.getCurrentPosition() / (double) TurretConstants.kEncoderTicksToDegrees;
-    double desiredAngle =
-        AngleUnit.normalizeDegrees(targetDegrees) * TurretConstants.servoToAzimuthGearRatio;
-    controller.setSetPoint(desiredAngle);
+    turretAzimuth.updateInputs(inputs);
 
-    double error =
-        controller.calculate(
-            turretAzimuth.getCurrentPosition() / (double) TurretConstants.kEncoderTicksToDegrees);
+    double currentAngle = inputs.position / (double) TurretConstants.kAzimuthTicksToDegrees;
+    double error = controller.calculate(currentAngle);
 
+    // May have to account for battery sag
     turretAzimuth.setPower(error);
   }
 
-  public void setState(TurretState state) {}
+  public void setState(TurretState state) {
+    this.state = state;
+  }
 }

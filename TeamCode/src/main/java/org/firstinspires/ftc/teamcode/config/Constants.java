@@ -68,10 +68,9 @@ public class Constants {
       public static final String rightServoKey = "";
       public static final String azimuthMotorKey = "";
 
-      public static final double servoToAzimuthGearRatio = 30.0 / 2.0;
+      public static final double motorToAzimuthGearRatio = 30.0 / 2.0;
 
-      public static final int kEncoderTicksToDegrees = 4000;
-      public static final int kServoTicksToDegrees = 4000;
+      public static final int kAzimuthTicksToDegrees = 4000;
 
       public static boolean isValidAngle(double inputAngle) {
         return AngleUnit.DEGREES.normalize(inputAngle) > 30;

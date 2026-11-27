@@ -19,6 +19,8 @@ public interface MotorIO {
 
   public void setTargetAngle(double degrees);
 
+  public default void setPower(double power) {}
+
   public default void setTargetVelocity(double rotationsPerMinute) {
     throw new UnsupportedOperationException("Cannot set velocity on this class.");
   }
