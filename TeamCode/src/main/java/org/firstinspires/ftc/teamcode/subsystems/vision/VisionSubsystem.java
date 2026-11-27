@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.HardwareVisio
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.LimelightVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.VisionInterface;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.ClusterTarget;
-import org.firstinspires.ftc.teamcode.util.CurrentAlliance;
 import org.firstinspires.ftc.teamcode.util.PoseMath;
 import org.firstinspires.ftc.teamcode.config.Constants.VisionConstants;
+import org.firstinspires.ftc.teamcode.config.Constants.DashboardConstants;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +22,9 @@ public class VisionSubsystem implements Subsystem {
 
   private final VisionInterface vision;
   private final Drivetrain drivetrain;
-  private final CurrentAlliance alliance;
 
-  public VisionSubsystem(HardwareMap hardwareMap, Drivetrain drivetrain, CurrentAlliance alliance) {
+  public VisionSubsystem(HardwareMap hardwareMap, Drivetrain drivetrain) {
     this.drivetrain = drivetrain;
-    this.alliance = alliance;
 
     switch (VisionConstants.visionType) {
       case NATIVE:
@@ -54,7 +52,7 @@ public class VisionSubsystem implements Subsystem {
               boolean isCluster = x instanceof ClusterTarget;
               if (isCluster) {
                 ClusterTarget target = (ClusterTarget) x;
-                return target.tagAlliance == alliance;
+                return target.tagAlliance == DashboardConstants.alliance;
               }
 
               return false;

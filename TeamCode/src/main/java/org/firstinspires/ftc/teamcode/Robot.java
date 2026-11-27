@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
@@ -24,14 +25,13 @@ public class Robot {
   public final VisionSubsystem vision;
 
   public final GamepadEx driverController;
-  public final CurrentAlliance alliance = CurrentAlliance.BLUE;
 
   public Robot() {
     controlHub = new ControlHubSubsystem(hardwareMap);
     drive = new Drivetrain(hardwareMap);
     intake = new IntakeSubsystem(hardwareMap, controlHub.getVoltageSupplier());
     shooter = new ShooterSubsystem(hardwareMap, controlHub.getVoltageSupplier());
-    vision = new VisionSubsystem(hardwareMap, drive, alliance);
+    vision = new VisionSubsystem(hardwareMap, drive);
     turret = new TurretSubsystem(hardwareMap, controlHub.getVoltageSupplier(), vision);
 
     driverController = new GamepadEx(gamepad1);

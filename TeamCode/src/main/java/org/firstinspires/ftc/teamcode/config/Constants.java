@@ -1,10 +1,18 @@
 package org.firstinspires.ftc.teamcode.config;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.util.CurrentAlliance;
 
 public class Constants {
+
+  @Config
+  public static class DashboardConstants {
+    public static CurrentAlliance alliance = CurrentAlliance.BLUE;
+  }
+
   public static class ControlHubConstants {
     public static final String voltageSensorKey = "";
   }
