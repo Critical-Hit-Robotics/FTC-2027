@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.io;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.config.Constants.ServoIOConstants;
-
-import java.util.function.DoubleSupplier;
 
 public class MotorIOServo implements MotorIO {
 
@@ -26,16 +22,14 @@ public class MotorIOServo implements MotorIO {
   }
 
   public final MotorIOServoConfig config;
-  private final DoubleSupplier voltage;
   private final ServoEx servo;
 
   private double targetDegrees = -1;
 
-  public MotorIOServo(HardwareMap hardwareMap, MotorIOServoConfig config, DoubleSupplier voltage) {
+  public MotorIOServo(HardwareMap hardwareMap, MotorIOServoConfig config) {
     servo = hardwareMap.get(ServoEx.class, config.kServoIdentifier);
 
     this.config = config;
-    this.voltage = voltage;
   }
 
   @Override
