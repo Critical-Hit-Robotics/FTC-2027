@@ -21,7 +21,8 @@ public class TurretSubsystem implements Subsystem {
     IDLE
   }
 
-  VisionSubsystem visionSubsystem;
+  private TurretState state;
+  private final VisionSubsystem visionSubsystem;
 
   private final DcMotorEx turretAzimuth;
   private double targetDegrees = 0;
@@ -32,8 +33,11 @@ public class TurretSubsystem implements Subsystem {
           TurretConstants.azimuthPIDCoefficients.i,
           TurretConstants.azimuthPIDCoefficients.d);
 
-  public TurretSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
+  public TurretSubsystem(
+      HardwareMap hardwareMap, DoubleSupplier voltageSupplier, VisionSubsystem vision) {
     turretAzimuth = hardwareMap.get(DcMotorEx.class, TurretConstants.azimuthMotorKey);
+    this.state = TurretState.TARGETING;
+    this.visionSubsystem = vision;
   }
 
   public void setVoltage(double volts) {}

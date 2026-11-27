@@ -10,26 +10,29 @@ import org.firstinspires.ftc.teamcode.subsystems.ControlHub.ControlHubSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 
 public class Robot {
-    public final ElapsedTime runtime = new ElapsedTime();
-    public final Drivetrain drive;
-    public final IntakeSubsystem intake;
-    public final ShooterSubsystem shooter;
-    public final ControlHubSubsystem controlHub;
-    public final VisionSubsystem vision;
+  public final ElapsedTime runtime = new ElapsedTime();
+  public final Drivetrain drive;
+  public final IntakeSubsystem intake;
+  public final ShooterSubsystem shooter;
+  public final TurretSubsystem turret;
+  public final ControlHubSubsystem controlHub;
+  public final VisionSubsystem vision;
 
-    public final GamepadEx driverController;
-    public final VisionSubsystem.CurrentAlliance alliance = VisionSubsystem.CurrentAlliance.BLUE;
+  public final GamepadEx driverController;
+  public final VisionSubsystem.CurrentAlliance alliance = VisionSubsystem.CurrentAlliance.BLUE;
 
+  public Robot() {
+    controlHub = new ControlHubSubsystem(hardwareMap);
+    drive = new Drivetrain(hardwareMap);
+    intake = new IntakeSubsystem(hardwareMap, controlHub.getVoltageSupplier());
+    shooter = new ShooterSubsystem(hardwareMap, controlHub.getVoltageSupplier());
+    vision = new VisionSubsystem(hardwareMap, this);
+    turret = new TurretSubsystem(hardwareMap, controlHub.getVoltageSupplier(), vision);
 
-    public Robot() {
-        controlHub = new ControlHubSubsystem(hardwareMap);
-        drive = new Drivetrain(hardwareMap);
-        intake = new IntakeSubsystem(hardwareMap, controlHub.getVoltageSupplier());
-        shooter = new ShooterSubsystem(hardwareMap, controlHub.getVoltageSupplier());
-        vision = new VisionSubsystem(hardwareMap, this);
-        driverController = new GamepadEx(gamepad1);
-    }
+    driverController = new GamepadEx(gamepad1);
+  }
 }
