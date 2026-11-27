@@ -24,7 +24,7 @@ public class ShooterSubsystem implements Subsystem {
         frontFlyWheelInputs = new MotorIOInputsAutoLogged();
         backFlyWheelInputs = new MotorIOInputsAutoLogged();
     }
-
+    
 
     @Override
     public void periodic() {

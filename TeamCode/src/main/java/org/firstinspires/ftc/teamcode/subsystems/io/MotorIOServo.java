@@ -5,29 +5,55 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.config.Constants.ServoIOConstants;
 
 import java.util.function.DoubleSupplier;
 
 public class MotorIOServo implements MotorIO {
-    private final ServoEx servo;
-    private final DoubleSupplier voltage;
-    private final int targetPosition = -1;
-    private final int targetVoltage = -1;
-    private final int targetPower = -1;
 
-    public MotorIOServo(HardwareMap hardwareMap, String identifier, DoubleSupplier voltage) {
-        servo = hardwareMap.get(ServoEx.class, identifier);
-        this.voltage = voltage;
+  public static class MotorIOServoConfig {
+    public final double kMaximumDegrees;
+    public final String kServoIdentifier;
+
+    public MotorIOServoConfig(String kServoIdentifier) {
+      this(kServoIdentifier, ServoIOConstants.kMaximumDegrees);
     }
 
-
-    @Override
-    public void updateInputs(MotorIOInputsAutoLogged inputs) {
-
+    public MotorIOServoConfig(String kServoIdentifier, double kMaximumDegrees) {
+      this.kServoIdentifier = kServoIdentifier;
+      this.kMaximumDegrees = kMaximumDegrees;
     }
+  }
 
-    @Override
-    public void setTargetAngle(double degrees) {
+  public final MotorIOServoConfig config;
+  private final DoubleSupplier voltage;
+  private final ServoEx servo;
 
-    }
+  private double targetDegrees = -1;
+
+  public MotorIOServo(HardwareMap hardwareMap, MotorIOServoConfig config, DoubleSupplier voltage) {
+    servo = hardwareMap.get(ServoEx.class, config.kServoIdentifier);
+
+    this.config = config;
+    this.voltage = voltage;
+  }
+
+  @Override
+  public void updateInputs(MotorIOInputsAutoLogged inputs) {
+    inputs.targetVelocity = -1;
+    inputs.rpm = -1;
+    inputs.targetDegrees = targetDegrees;
+    inputs.position = servo.get();
+    inputs.degrees = servo.get() * config.kMaximumDegrees;
+  }
+
+  @Override
+  public void setTargetAngle(double degrees) {
+    double clampedDegrees = Math.max(0, Math.min(degrees, config.kMaximumDegrees));
+    targetDegrees = clampedDegrees;
+
+    // Scale our designated degrees to our maximum.
+    double position = (clampedDegrees / config.kMaximumDegrees);
+    servo.set(position);
+  }
 }
