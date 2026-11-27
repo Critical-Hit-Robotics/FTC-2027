@@ -5,14 +5,13 @@ import com.seattlesolvers.solverslib.command.Subsystem;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.HardwareVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.LimelightVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.VisionInterface;
 import org.firstinspires.ftc.teamcode.subsystems.vision.targets.ClusterTarget;
+import org.firstinspires.ftc.teamcode.util.CurrentAlliance;
 import org.firstinspires.ftc.teamcode.util.PoseMath;
 import org.firstinspires.ftc.teamcode.config.Constants.VisionConstants;
 
@@ -20,10 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VisionSubsystem implements Subsystem {
-  public enum CurrentAlliance {
-    RED,
-    BLUE
-  }
 
   private final VisionInterface vision;
   private final Drivetrain drivetrain;

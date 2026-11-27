@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
+import org.firstinspires.ftc.teamcode.util.CurrentAlliance;
 
 public class Robot {
   public final ElapsedTime runtime = new ElapsedTime();
@@ -23,7 +24,7 @@ public class Robot {
   public final VisionSubsystem vision;
 
   public final GamepadEx driverController;
-  public final VisionSubsystem.CurrentAlliance alliance = VisionSubsystem.CurrentAlliance.BLUE;
+  public final CurrentAlliance alliance = CurrentAlliance.BLUE;
 
   public Robot() {
     controlHub = new ControlHubSubsystem(hardwareMap);

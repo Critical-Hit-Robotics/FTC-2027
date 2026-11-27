@@ -2,30 +2,41 @@ package org.firstinspires.ftc.teamcode.subsystems.vision.targets;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
+import org.firstinspires.ftc.teamcode.util.CurrentAlliance;
 
 import java.util.List;
 
 public final class ClusterTarget extends VisionTarget {
-    public final String tagName;
-    public final VisionSubsystem.CurrentAlliance tagAlliance;
+  public final String tagName;
+  public final CurrentAlliance tagAlliance;
 
-    // Can be null
-    public final List<TagTarget> foundTargets;
+  // Can be null
+  public final List<TagTarget> foundTargets;
 
-    public ClusterTarget(long timestampNanoseconds, Pose3D targetPose, String tagName, VisionSubsystem.CurrentAlliance tagAlliance, List<TagTarget> foundTargets, int totalTargets) {
-        super(timestampNanoseconds, targetPose, foundTargets.size() / (double) totalTargets);
+  public ClusterTarget(
+      long timestampNanoseconds,
+      Pose3D targetPose,
+      String tagName,
+      CurrentAlliance tagAlliance,
+      List<TagTarget> foundTargets,
+      int totalTargets) {
+    super(timestampNanoseconds, targetPose, foundTargets.size() / (double) totalTargets);
 
-        this.tagName = tagName;
-        this.tagAlliance = tagAlliance;
-        this.foundTargets = foundTargets;
-    }
+    this.tagName = tagName;
+    this.tagAlliance = tagAlliance;
+    this.foundTargets = foundTargets;
+  }
 
-    public ClusterTarget(long timestampNanoseconds, Pose3D targetPose, String tagName, VisionSubsystem.CurrentAlliance tagAlliance, double fractionVisible) {
-        super(timestampNanoseconds, targetPose, fractionVisible);
+  public ClusterTarget(
+      long timestampNanoseconds,
+      Pose3D targetPose,
+      String tagName,
+      CurrentAlliance tagAlliance,
+      double fractionVisible) {
+    super(timestampNanoseconds, targetPose, fractionVisible);
 
-        this.tagName = tagName;
-        this.tagAlliance = tagAlliance;
-        this.foundTargets = null;
-    }
-
+    this.tagName = tagName;
+    this.tagAlliance = tagAlliance;
+    this.foundTargets = null;
+  }
 }
