@@ -23,8 +23,7 @@ public class TurretSubsystem implements Subsystem {
 
   VisionSubsystem visionSubsystem;
 
-  private final DcMotorEx turretAzimuthEncoder;
-
+  private final DcMotorEx turretAzimuth;
   private double targetDegrees = 0;
 
   PIDController controller =
@@ -34,7 +33,7 @@ public class TurretSubsystem implements Subsystem {
           TurretConstants.azimuthPIDCoefficients.d);
 
   public TurretSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
-    turretAzimuthEncoder = hardwareMap.get(DcMotorEx.class, TurretConstants.azimuthEncoder);
+    turretAzimuth = hardwareMap.get(DcMotorEx.class, TurretConstants.azimuthMotorKey);
   }
 
   public void setVoltage(double volts) {}
@@ -44,14 +43,23 @@ public class TurretSubsystem implements Subsystem {
       return;
     }
 
-    double currentAngle =
-        turretAzimuthEncoder.getCurrentPosition() / (double) TurretConstants.kEncoderTicksToDegrees;
-    double desiredAngle =
-        AngleUnit.normalizeDegrees(degrees) * TurretConstants.servoToAzimuthGearRatio;
+    this.targetDegrees = degrees;
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    double currentAngle =
+        turretAzimuth.getCurrentPosition() / (double) TurretConstants.kEncoderTicksToDegrees;
+    double desiredAngle =
+        AngleUnit.normalizeDegrees(targetDegrees) * TurretConstants.servoToAzimuthGearRatio;
+    controller.setSetPoint(desiredAngle);
+
+    double error =
+        controller.calculate(
+            turretAzimuth.getCurrentPosition() / (double) TurretConstants.kEncoderTicksToDegrees);
+
+    turretAzimuth.setPower(error);
+  }
 
   public void setState(TurretState state) {}
 }

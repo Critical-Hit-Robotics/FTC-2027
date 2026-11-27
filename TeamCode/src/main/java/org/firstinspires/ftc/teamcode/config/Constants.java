@@ -58,7 +58,7 @@ public class Constants {
       public static final PIDCoefficients azimuthPIDCoefficients = new PIDCoefficients(0, 0, 0);
       public static final String leftServoKey = "";
       public static final String rightServoKey = "";
-      public static final String azimuthEncoder = "";
+      public static final String azimuthMotorKey = "";
 
       public static final double servoToAzimuthGearRatio = 30.0 / 2.0;
 
