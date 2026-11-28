@@ -73,7 +73,7 @@ public class Constants {
       public static final int kAzimuthTicksToDegrees = 4000;
 
       public static boolean isValidAngle(double inputAngle) {
-        return AngleUnit.DEGREES.normalize(inputAngle) > 30;
+        return AngleUnit.DEGREES.normalize(inputAngle) > 270;
       }
     }
   }

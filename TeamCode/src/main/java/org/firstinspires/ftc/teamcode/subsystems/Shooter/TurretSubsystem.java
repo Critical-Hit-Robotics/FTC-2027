@@ -6,6 +6,7 @@ import com.seattlesolvers.solverslib.command.Subsystem;
 import com.seattlesolvers.solverslib.controller.PIDController;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.config.Constants.ShooterConstants.TurretConstants;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOGoBuilda;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
@@ -63,6 +64,20 @@ public class TurretSubsystem implements Subsystem {
   public void periodic() {
     turretAzimuth.updateInputs(inputs);
 
+    switch (state) {
+      case IDLE:
+        break;
+      case TARGETING:
+        targetAngle();
+        break;
+    }
+  }
+
+  private void findProjectedAngle() {
+    Pose3D currentHub = visionSubsystem.getClosestHive().targetPose;
+  }
+
+  private void targetAngle() {
     double currentAngle = inputs.position / (double) TurretConstants.kAzimuthTicksToDegrees;
     double error = controller.calculate(currentAngle);
 
