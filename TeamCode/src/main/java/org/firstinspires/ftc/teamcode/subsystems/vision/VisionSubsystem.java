@@ -5,8 +5,10 @@ import com.seattlesolvers.solverslib.command.Subsystem;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.HardwareVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.LimelightVision;
 import org.firstinspires.ftc.teamcode.subsystems.vision.interfaces.VisionInterface;
@@ -22,9 +24,11 @@ public class VisionSubsystem implements Subsystem {
 
   private final VisionInterface vision;
   private final Drivetrain drivetrain;
+  private final ShooterSubsystem shooter;
 
-  public VisionSubsystem(HardwareMap hardwareMap, Drivetrain drivetrain) {
+  public VisionSubsystem(HardwareMap hardwareMap, Drivetrain drivetrain, ShooterSubsystem shooter) {
     this.drivetrain = drivetrain;
+    this.shooter = shooter;
 
     switch (VisionConstants.visionType) {
       case NATIVE:
@@ -43,6 +47,14 @@ public class VisionSubsystem implements Subsystem {
   @Override
   public void periodic() {
     vision.periodic();
+
+    // Find the angle at which the turret should be aiming
+    Pose3D currentHub = getClosestHive().targetPose;
+    Pose3D currentPose = drivetrain.getRobotPose();
+
+    Position projectedRobot =
+        PoseMath.advance2d(
+            currentPose.getPosition(), drivetrain.getRobotVelocity(), 100, DistanceUnit.CM);
   }
 
   public ClusterTarget getClosestHive() {

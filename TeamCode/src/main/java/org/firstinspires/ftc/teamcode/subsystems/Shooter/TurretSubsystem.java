@@ -6,14 +6,18 @@ import com.seattlesolvers.solverslib.command.Subsystem;
 import com.seattlesolvers.solverslib.controller.PIDController;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.config.Constants.ShooterConstants.TurretConstants;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOGoBuilda;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIO;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOInputsAutoLogged;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOServo;
 import org.firstinspires.ftc.teamcode.subsystems.io.MotorIOServo.MotorIOServoConfig;
+import org.firstinspires.ftc.teamcode.util.PoseMath;
 
 import java.util.function.DoubleSupplier;
 
@@ -24,7 +28,6 @@ public class TurretSubsystem implements Subsystem {
   }
 
   private TurretState state;
-  private final VisionSubsystem visionSubsystem;
 
   private final MotorIOGoBuilda turretAzimuth;
   private final MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
@@ -36,8 +39,8 @@ public class TurretSubsystem implements Subsystem {
           TurretConstants.azimuthPIDCoefficients.i,
           TurretConstants.azimuthPIDCoefficients.d);
 
-  public TurretSubsystem(
-      HardwareMap hardwareMap, DoubleSupplier voltageSupplier, VisionSubsystem vision) {
+  public TurretSubsystem(HardwareMap hardwareMap, DoubleSupplier voltageSupplier) {
+
     turretAzimuth =
         new MotorIOGoBuilda(
             hardwareMap,
@@ -45,7 +48,6 @@ public class TurretSubsystem implements Subsystem {
             voltageSupplier,
             TurretConstants.kAzimuthTicksToDegrees);
     this.state = TurretState.TARGETING;
-    this.visionSubsystem = vision;
   }
 
   public void setAngle(double degrees) {
@@ -71,10 +73,6 @@ public class TurretSubsystem implements Subsystem {
         targetAngle();
         break;
     }
-  }
-
-  private void findProjectedAngle() {
-    Pose3D currentHub = visionSubsystem.getClosestHive().targetPose;
   }
 
   private void targetAngle() {
